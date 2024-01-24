@@ -3,13 +3,21 @@ Dit Bash-script automatiseert essentiële beveiligingsstappen voor het verbetere
 
 # Gebruik
 1. Kloon de repository naar je Ubuntu-server met de volgende commando:
-  git clone https://github.com/Bronnenveld/ubuntu-firestarter.git
+
+   ```bash
+   git clone https://github.com/Bronnenveld/ubuntu-firestarter.git
 2. Navigeer naar de map:
-  cd ubuntu-firestarter.git
+
+   ```bash
+   cd ubuntu-firestarter.git
 3. Maak het script uitvoerbaar:
-  chmod +x ubuntu-firestarter.git.sh   
-4. Voer het script uit:
-  ./ubuntu-firestarter.git.sh
+
+   ```bash
+   chmod +x ubuntu-firestarter.git.sh   
+3. Voer het script uit:
+
+   ```bash
+   ./ubuntu-firestarter.git.sh
 
 # Belangrijke Opmerkingen:
 
@@ -20,21 +28,37 @@ Dit Bash-script automatiseert essentiële beveiligingsstappen voor het verbetere
 # Inbegrepen Beveiligingsstappen:
 
   - Genereren en toevoegen van SSH-sleutels.
-  - Uitschakelen van wachtwoordauthenticatie.
-  - Wijzigen van de SSH-poort.
-  - Beperken van SSH-toegang tot specifieke IP-adressen.
-  - Installatie van Fail2Ban.
-  - Implementatie van een Web Application Firewall (WAF).
-  - Installatie en configuratie van een antivirusprogramma.
-  - Bescherming tegen Brute Force-aanvallen (fail2ban).
-  - Beveiligde verbindingen (HTTPS) met Let's Encrypt.
-  - Monitoring en analyse van logbestanden (Logwatch).
-  - Installatie van een Intrusion Detection System (IDS) - Suricata.
-  - Uitvoeren van regelmatige beveiligingsaudits met Lynis.
+  - Beperken van SSH-toegang tot specifieke gebruikers.
+  - Uitschakelen van wachtwoordauthenticatie (optioneel).
+  - Wijzigen van de SSH-poort (optioneel).
+  - Toevoegen van een beveiligde banner aan SSH-login.
+  - Beperken van SSH-toegang tot specifieke IP-adressen (optioneel).
+  - Installatie van Failban voor bescherming tegen brute force-aanvallen.
+  - Implementatie van een Web Application Firewall (WAF) (optioneel).
+  - Gebruik van HTTPS met certbot.
+  - Installatie en configuratie van een antivirusprogramma (clamav) (optioneel).
+  - Monitoring en analyse van logbestanden met Logwatch, Arpwatch, Metalog en Rsyslog.
+  - Installatie van een Intrusion Detection System (IDS) (Suricata).
+  - Regelmatige beveiligingsaudits met Lynis.
+  - Strikt beheer van gebruikersrechten.
+  - Controle op beschikbare beveiligingsupdates.
+  - Specifieke permissies aanpassen en bepaalde kernel- en systeemfuncties inschakelen.
 
+# Aanvullende Instructies
+
+  - Voeg indien nodig extra maatregelen toe volgens de gedetailleerde commentaren in het script.
+  - Controleer regelmatig op beschikbare beveiligingsupdates en voer upgrades uit.
+  - Beheer gebruikersrechten strikt en beperk deze tot het noodzakelijke niveau.
+
+## Let op: Zorg ervoor dat je volledige back-ups hebt voordat je het script uitvoert, en begrijp de gevolgen van elke beveiligingsmaatregel voordat je deze implementeert.
+    
 # Wat is het doel van deze script?
 
 Dit script is ontworpen om je te helpen bij het automatiseren van veelvoorkomende beveiligingstaken, maar het is belangrijk om het aan te passen aan je specifieke behoeften en om ervoor te zorgen dat je begrijpt wat elk commando doet. Voer het script uit op een testomgeving voordat je het op een productieserver toepast.
+
+# Bijdragen?
+
+Voel je vrij om bij te dragen aan dit script door verbeteringen voor te stellen of bugs te melden. Samen kunnen we bijdragen aan een veiligere serveromgeving.
 
 # Auteursrechtelijke Mededeling:
 
