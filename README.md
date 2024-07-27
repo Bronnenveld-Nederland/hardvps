@@ -133,6 +133,11 @@ U kunt het script aanpassen aan uw specifieke behoeften door de volgende secties
 - **Systeeminstellingen:** Bewerk de sysctl-parameters in de "Systeembrede beveiligingsinstellingen configureren" sectie.
 - **Automatische updates:** Pas de instellingen voor onbeheerde upgrades aan indien nodig.
 - **Wachtwoordbeleid:** Wijzig de wachtwoordvereisten in de "Gebruikersaccountbeleid verharden" en "Sterke wachtwoordvereisten configureren" secties.
+- **Beperk SSH-toegang tot specifieke IP-adressen:** Voeg een regel toe in /etc/ssh/sshd_config om SSH-toegang te beperken tot specifieke IP-adressen.
+- **Sudo-toegang beperken en loggen:** Voeg extra configuraties toe om sudo-gebruik te beperken en te loggen.
+- **Disable IPv6:** Voeg configuraties toe om IPv6 uit te schakelen als het niet nodig is.
+- **Monitoring en Logging met Logwatch:** Voeg Logwatch toe voor verbeterde monitoring en loggen.
+- **Disable USB storage:** Voeg configuraties toe om USB-opslag uit te schakelen als extra beveiligingsmaatregel.
 
 ## Logbestanden en Monitoring
 
