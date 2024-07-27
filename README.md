@@ -176,4 +176,4 @@ Dit project is gelicentieerd onder de MIT-licentie. Zie het LICENSE-bestand voor
 
 ## Contact
 
-Voor vragen of ondersteuning, neem contact op via bronnenveld@outlook.com.
+Voor vragen of ondersteuning, neem contact op.
