@@ -8,7 +8,7 @@ Dit Bash-script automatiseert essentiële beveiligingsstappen voor het verbetere
 
 1. Kloon de repository naar je Ubuntu-server met het volgende commando:
    ```bash
-   git clone https://github.com/Bronnenveld/ubuntu-firestarter.git
+   git clone https://github.com/EddyGoesHard/ubuntu-firestarter.git
    ```
 
 2. Navigeer naar de map:
