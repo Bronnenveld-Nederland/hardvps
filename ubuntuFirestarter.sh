@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ubuntu Firestarter Beveiligingsscript
+# Ultieme Ubuntu Beveiligingsscript
 # Dit script implementeert uitgebreide beveiligingsmaatregelen voor Ubuntu 24.02 servers
 # Waarschuwing: Gebruik met voorzichtigheid en test grondig voordat u het in productie toepast
 
@@ -79,6 +79,11 @@ execute_command "echo 'Welkom bij Mijn Beveiligde Server' | sudo tee -a /etc/ssh
 execute_command "sudo sed -i 's/#Banner none/Banner \/etc\/ssh\/sshd_banner/' /etc/ssh/sshd_config"
 execute_command "sudo systemctl restart ssh"
 
+# Beperk SSH-toegang tot specifieke IP-adressen (optioneel)
+allowed_ip="192.168.1.100" # Vervang dit door het toegestane IP-adres
+execute_command "echo 'AllowUsers jouwgebruiker@$allowed_ip' | sudo tee -a /etc/ssh/sshd_config"
+execute_command "sudo systemctl restart ssh"
+
 # Fail2ban instellen
 echo "Fail2ban configureren voor bescherming tegen brute-force aanvallen"
 backup_config "/etc/fail2ban/jail.conf"
@@ -112,6 +117,12 @@ execute_command "sudo sysctl -w net.ipv4.conf.all.send_redirects=0"
 execute_command "sudo sysctl -w net.ipv4.conf.default.send_redirects=0"
 execute_command "sudo sysctl -w net.ipv4.conf.all.accept_redirects=0"
 execute_command "sudo sysctl -w net.ipv4.conf.default.accept_redirects=0"
+execute_command "sudo sysctl -p"
+
+# IPv6 uitschakelen (optioneel)
+echo "IPv6 uitschakelen"
+execute_command "echo 'net.ipv6.conf.all.disable_ipv6 = 1' | sudo tee -a /etc/sysctl.conf"
+execute_command "echo 'net.ipv6.conf.default.disable_ipv6 = 1' | sudo tee -a /etc/sysctl.conf"
 execute_command "sudo sysctl -p"
 
 # /proc bestandssysteem verharden
@@ -150,32 +161,42 @@ cat << EOF | sudo tee /etc/cron.daily/security-scan
 #!/bin/bash
 echo "Dagelijkse beveiligingsscan gestart op \$(date)" >> /var/log/security-scan.log
 rkhunter --update
-rkhunter --check --skip-keypress --report-warnings-only >> /var/log/security-scan.log
-chkrootkit >> /var/log/security-scan.log
+rkhunter --check --skip-keypress --report-warnings-only >> /var/log/security-scan.log 2>&1
+chkrootkit >> /var/log/security-scan.log 2>&1
 lynis audit system >> /var/log/security-scan.log
-clamscan -r / --exclude-dir=/sys --exclude-dir=/proc --exclude-dir=/dev >> /var/log/security-scan.log
-echo "Dagelijkse beveiligingsscan voltooid op \$(date)" >> /var/log/security-scan.log
 EOF
 execute_command "sudo chmod +x /etc/cron.daily/security-scan"
 
-# Gebruikersaccountbeleid verharden
-echo "Gebruikersaccountbeleid verharden"
-backup_config "/etc/login.defs"
-execute_command "sudo sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t90/' /etc/login.defs"
-execute_command "sudo sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t10/' /etc/login.defs"
-execute_command "sudo sed -i 's/PASS_WARN_AGE\t7/PASS_WARN_AGE\t14/' /etc/login.defs"
+# Google Authenticator voor 2FA instellen
+echo "Google Authenticator voor SSH instellen"
+execute_command "sudo apt install -y libpam-google-authenticator"
+execute_command "sudo google-authenticator -t -d -f -r 3 -R 30 -w 3 -e 10"
+backup_config "/etc/pam.d/sshd"
+execute_command "echo 'auth required pam_google_authenticator.so' | sudo tee -a /etc/pam.d/sshd"
+backup_config "/etc/ssh/sshd_config"
+execute_command "echo 'AuthenticationMethods publickey,keyboard-interactive' | sudo tee -a /etc/ssh/sshd_config"
+execute_command "sudo systemctl restart sshd"
 
-# Procesaccounting inschakelen
-echo "Procesaccounting inschakelen voor betere systeemauditing"
-execute_command "sudo apt install -y acct"
-execute_command "sudo systemctl enable acct"
-execute_command "sudo systemctl start acct"
+# Linux Auditing Systems instellen
+echo "Linux Auditing Systems instellen om activiteiten op te volgen"
+execute_command "sudo apt install -y auditd audispd-plugins"
+execute_command "sudo systemctl enable auditd"
+execute_command "sudo systemctl start auditd"
 
 # NTP (Network Time Protocol) configureren
 echo "NTP configureren om de systeemklok up-to-date te houden"
 execute_command "sudo apt install -y ntp"
 execute_command "sudo systemctl enable ntp"
 execute_command "sudo systemctl start ntp"
+
+# USB-opslag uitschakelen (optioneel)
+echo "USB-opslag uitschakelen"
+execute_command "echo 'install usb-storage /bin/true' | sudo tee -a /etc/modprobe.d/blacklist.conf"
+
+# Monitoring en loggen met Logwatch
+echo "Logwatch installeren en configureren"
+execute_command "sudo apt install -y logwatch"
+execute_command "sudo logwatch --detail High --mailto jouw-email@example.com --service all --range today"
 
 echo "Alle beveiligingsmaatregelen zijn succesvol toegepast."
 echo "Het systeem is nu beveiligd."
