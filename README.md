@@ -1,4 +1,4 @@
-# Ubuntu Firestarter Ultimate
+# Ubuntu Firestarter
 
 ### Een eenvoudige beveiligingsscript voor het verharden van een Ubuntu-server
 
@@ -94,17 +94,17 @@ Ubuntu Firestarter Ultimate is een uitgebreid beveiligingsscript ontworpen om Ub
 
 1. Download het script:
    ```bash
-   wget https://raw.githubusercontent.com/your-repo/ubuntu-firestarter-ultimate.sh
+   wget https://raw.githubusercontent.com/EddyGoesHard/ubuntu-firestarter.sh
    ```
 
 2. Maak het script uitvoerbaar:
    ```bash
-   chmod +x ubuntu-firestarter-ultimate.sh
+   chmod +x ubuntu-firestarter.sh
    ```
 
 3. Voer het script uit met sudo-rechten:
    ```bash
-   sudo ./ubuntu-firestarter-ultimate.sh
+   sudo ./ubuntu-firestarter.sh
    ```
 
 4. Volg de instructies op het scherm en beantwoord eventuele vragen tijdens de uitvoering.
